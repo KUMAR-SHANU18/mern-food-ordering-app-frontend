@@ -3,7 +3,7 @@ import UserProfileForm from "@/forms/user-profile-form/UserProfileForm";
 
 const UserProfilePage = () => {
   const { currentUser, isLoading: isGetLoading } = useGetMyUser();
-  const { mutate: updateUser, isLoading: isUpdateLoading } = useUpdateMyUser();
+  const { updateUser, isLoading: isUpdateLoading } = useUpdateMyUser();
 
   if (isGetLoading) {
     return <span>Loading...</span>;
@@ -18,7 +18,6 @@ const UserProfilePage = () => {
       currentUser={currentUser}
       onSave={updateUser}
       isLoading={isUpdateLoading}
-    
     />
   );
 };

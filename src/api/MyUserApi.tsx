@@ -84,6 +84,7 @@ type UpdateMyUserRequest = {
   city: string;
   country: string;
 };
+
 export const useUpdateMyUser = () => {
   const { getAccessTokenSilently } = useAuth0();
 
@@ -106,14 +107,22 @@ export const useUpdateMyUser = () => {
     return response.json();
   };
 
-  const mutation = useMutation(updateMyUserRequest, {
-    onSuccess: () => {
-      toast.success("User profile updated!");
-    },
-    onError: (error: Error) => {
-      toast.error(error.message);
-    },
-  });
+  const {
+    mutateAsync: updateUser,
+    isLoading,
+    isSuccess,
+    error,
+    reset,
+  } = useMutation(updateMyUserRequest);
 
-  return mutation;
+  if (isSuccess) {
+    toast.success("User profile updated!");
+  }
+
+  if (error) {
+    toast.error(error.toString());
+    reset();
+  }
+
+  return { updateUser, isLoading };
 };
